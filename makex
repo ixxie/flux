@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -e
+
+# Set correct permissions in the directory
+chmod -R 700 "${FLUX_HOME}/flux"

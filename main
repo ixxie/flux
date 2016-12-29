@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -e
+
+# Main flux script
+
+# Look for scripts in this directory
+SCRIPTDIR="${FLUX_HOME}/flux"
+# Create an argument array
+ARGS=("$@")
+
+# Iterate from the full length of the argument array backwards
+for i in $(seq ${#ARGS[@]} -1 1)
+do
+    # Construct the path to command from the subarray
+    COMPATH=$SCRIPTDIR$(printf '/%s' "${ARGS[@]:0:$i}")
+    # If this command path is a valid script, execute it 
+    # with the remaining part of the array as arguments.
+    if [[ -f $COMPATH && -x $COMPATH ]]
+        then
+            $COMPATH "${ARGS[@]:$i:${#ARGS[@]}}"
+        exit 0
+    # If it is a directory, find the 'main' script and
+    # execute that with the arguments of the array.
+    elif [[ -d $COMPATH ]]
+        then
+            $COMPATH/main "${ARGS[@]:$i:${#ARGS[@]}}"
+    else
+        continue
+    fi
+done
