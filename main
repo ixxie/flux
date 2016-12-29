@@ -24,7 +24,9 @@ do
     elif [[ -d $COMPATH ]]
         then
             $COMPATH/main "${ARGS[@]:$i:${#ARGS[@]}}"
+            exit 0
     else
         continue
     fi
 done
+
