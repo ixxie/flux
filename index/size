@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -e
+
+du -ch -- *$1* | tail -n 1 
