@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+
+# Rebuild NixOS
+flux rebuild system
+
+# Build scripts
+flux rebuild scripts

@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-set -e
-
-cp ${FLUX_HOME}/env/nixos/* /etc/nixos
-
-nixos-rebuild switch
