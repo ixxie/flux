@@ -6,27 +6,45 @@ set -e
 # Look for scripts in this directory
 SCRIPTDIR="${FLUX_HOME}/flux"
 # Create an argument array
-ARGS=("$@")
+ARGARRAY=("$@")
 
-# Iterate from the full length of the argument array backwards
-for i in $(seq ${#ARGS[@]} -1 1)
-do
-    # Construct the path to command from the subarray
-    COMPATH=$SCRIPTDIR$(printf '/%s' "${ARGS[@]:0:$i}")
-    # If this command path is a valid script, execute it 
-    # with the remaining part of the array as arguments.
-    if [[ -f $COMPATH && -x $COMPATH ]]
-        then
-            $COMPATH "${ARGS[@]:$i:${#ARGS[@]}}"
-        exit 0
-    # If it is a directory, find the 'main' script and
-    # execute that with the arguments of the array.
-    elif [[ -d $COMPATH ]]
-        then
-            $COMPATH/main "${ARGS[@]:$i:${#ARGS[@]}}"
-            exit 0
-    else
-        continue
-    fi
-done
+function fluxlib {
+
+  list=$(find "$FLUX_HOME/flux/library/$1" -type f -print)
+
+  for file in $list
+    do
+      . "$file"
+  done
+}
+
+export -f fluxlib
+
+
+# Execute commands and source library files
+if [[ "$1" != "library" ]]
+    then
+        # Iterate from the full length of the argument array backwards
+        for i in $(seq ${#ARGARRAY[@]} -1 1)
+        do
+            # Construct the path to command from the subarray
+            COMPATH=$SCRIPTDIR$(printf '/%s' "${ARGARRAY[@]:0:$i}")
+
+            # If this command path is a valid script, execute it 
+            # with the remaining part of the array as arguments.
+            if [[ -f $COMPATH && -x $COMPATH ]]
+                then
+                    $COMPATH "${ARGARRAY[@]:$i:${#ARGARRAY[@]}}"
+                    exit 0
+            # If it is a directory, find the 'main' script and
+            # execute that with the arguments of the array.
+            elif [[ -d $COMPATH ]]
+                then
+                    $COMPATH/main "${ARGARRAY[@]:$i:${#ARGARRAY[@]}}"
+                    exit 0
+            else
+                continue
+            fi
+        done
+fi
 
