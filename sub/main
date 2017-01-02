@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+
+file="$1"
+
+vars="${@:2}"
+
+echo $vars
+
+export -p $vars > text.env

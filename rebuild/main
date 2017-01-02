@@ -4,5 +4,6 @@ set -e
 # Rebuild NixOS
 flux rebuild system
 
-# Build scripts
+# Rebuild scripts (i.e. make them executable)
 flux rebuild scripts
+
