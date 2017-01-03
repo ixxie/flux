@@ -5,19 +5,30 @@ fluxlib bash
 . "$FLUX_HOME/env/user"
 . "$FLUX_HOME/env/host"
 
-template="$FLUX_HOME/env/nixos/autoconfig.tmp"
-file="$FLUX_HOME/env/nixos/autoconfig.nix"
+function maketemp
+{
+    template="$1"
+    file="$2"
 
-cp "$template" "$file"
+    cp "$template" "$file"
 
-com="sed -i"
+    com="sed -i"
 
 
-for var in username fullname hostname timezone
-do
-    #sleep 1
-    clnvar=${!var//\//\\\/}
-    com="$com -e 's;\$$var;$clnvar;g'"
+    for var in username fullname hostname timezone
+    do
+        #sleep 1
+        clnvar=${!var//\//\\\/}
+        com="$com -e 's;\$$var;$clnvar;g'"
+    done
+
+    eval "$com $file"
+}
+
+templates=$(find "$FLUX_HOME/env/nixos/" -name "*.tmp")
+
+for file in $templates
+    do
+        maketemp "${file:0:-4}".{tmp,nix}
 done
 
-eval "$com $file"
