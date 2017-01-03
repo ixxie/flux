@@ -5,10 +5,12 @@ function sub
 {
 
     template="$1"
+   # output="$4"
     exp="$2"
     val="$3"
 
-    sed -e "s/$exp/$val/g" $template > output
-    echo "$output"
+    #echo "s/$exp/$val/g"
+
+    sed -e "s/$exp/$val/g" $template
 }
 

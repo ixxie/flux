@@ -6,19 +6,18 @@ fluxlib bash
 . "$FLUX_HOME/env/host"
 
 template="$FLUX_HOME/env/nixos/autoconfig.tmp"
-file="$FLUX_HOME/env/nixos/test.nix"
+file="$FLUX_HOME/env/nixos/autoconfig.nix"
 
 cp "$template" "$file"
+
+com="sed -i"
 
 
 for var in username fullname hostname timezone
 do
+    #sleep 1
     clnvar=${!var//\//\\\/}
-    sub $file "\$$var" "$clnvar" > "$file"
+    com="$com -e 's;\$$var;$clnvar;g'"
 done
 
-
-# tr
-# printf
-# PE = parameter expansion
-# printf/PE can escape. tr can replace/delete. PE can be used to delete.
+eval "$com $file"
