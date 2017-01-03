@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -e
+
+function sub
+{
+
+    template="$1"
+    exp="$2"
+    val="$3"
+
+    echo "s/$exp/$val/g" 
+
+    sed -e "s/$exp/$val/g" "$template" | echo
+    
+}
+

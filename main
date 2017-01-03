@@ -8,6 +8,7 @@ SCRIPTDIR="${FLUX_HOME}/flux"
 # Create an argument array
 ARGARRAY=("$@")
 
+# Define the flux library function to allow loading libraries
 function fluxlib {
 
   list=$(find "$FLUX_HOME/flux/library/$1" -type f -print)
@@ -17,9 +18,7 @@ function fluxlib {
       . "$file"
   done
 }
-
 export -f fluxlib
-
 
 # Execute commands and source library files
 if [[ "$1" != "library" ]]
