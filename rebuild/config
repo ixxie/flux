@@ -5,7 +5,7 @@ fluxlib bash
 . "$FLUX_HOME/env/user"
 . "$FLUX_HOME/env/host"
 
-template="$FLUX_HOME/env/nixos/custom.tmp"
+template="$FLUX_HOME/env/nixos/autoconfig.tmp"
 file="$FLUX_HOME/env/nixos/test.nix"
 
 cp "$template" "$file"
@@ -16,6 +16,7 @@ do
     clnvar=${!var//\//\\\/}
     sub $file "\$$var" "$clnvar" > "$file"
 done
+
 
 # tr
 # printf

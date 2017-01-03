@@ -8,9 +8,7 @@ function sub
     exp="$2"
     val="$3"
 
-    echo "s/$exp/$val/g" 
-
-    sed -e "s/$exp/$val/g" "$template" | echo
-    
+    sed -e "s/$exp/$val/g" $template > output
+    echo "$output"
 }
 
