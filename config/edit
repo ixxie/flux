@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -e
+sourcelib bash
+
+configname="$1"
+
+if [[ -z $configname]]
+    then
+        echo "Enter configuration name:"
+        read configname
+fi
+
+save $FLUX_HOME/env/config configname

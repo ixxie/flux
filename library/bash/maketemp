@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -e
+
+function maketemp
+{
+    template="$1"
+    file="$2"
+
+    cp "$template" "$file"
+
+    com="sed -i"
+
+    for var in username fullname hostname timezone
+    do
+        clnvar=${!var//\//\\\/}
+        com="$com -e 's;\$$var;$clnvar;g'"
+    done
+
+    eval "$com $file"
+}

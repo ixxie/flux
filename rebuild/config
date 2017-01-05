@@ -1,34 +1,36 @@
 #!/usr/bin/env bash
 set -e
-fluxlib bash
+sourcelib bash
 
+# Load variables
 . "$FLUX_HOME/env/user"
 . "$FLUX_HOME/env/host"
+configname="$1"
+if [[ -z $configname ]]
+    then
+        . "$FLUX_HOME/env/config"
+fi
 
-function maketemp
-{
-    template="$1"
-    file="$2"
+# Refresh build directory
+rm "$FLUX_HOME"/env/nixos/build/*
+cp "$FLUX_HOME"/env/nixos/$configname/* "$FLUX_HOME/env/nixos/build"
 
-    cp "$template" "$file"
+# Build templates into nix files
 
-    com="sed -i"
-
-
-    for var in username fullname hostname timezone
-    do
-        #sleep 1
-        clnvar=${!var//\//\\\/}
-        com="$com -e 's;\$$var;$clnvar;g'"
-    done
-
-    eval "$com $file"
-}
-
-templates=$(find "$FLUX_HOME/env/nixos/" -name "*.tmp")
+templates=$(find "$FLUX_HOME/env/nixos/build" -name "*.tmp")
 
 for file in $templates
     do
         maketemp "${file:0:-4}".{tmp,nix}
 done
+
+rm $templates
+
+# Build configuration file
+
+makeconfig "$FLUX_HOME/env/nixos/build"
+
+# Add custom (i.e. user supplied) options into the build
+
+cp "$FLUX_HOME"/env/nixos/custom.nix "$FLUX_HOME/env/nixos/build"
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-fluxlib bash
+sourcelib bash
 
 echo "Enter your user name:"
 read username
