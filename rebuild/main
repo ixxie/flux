@@ -2,7 +2,7 @@
 set -e
 
 # Rebuild Configuration
-flux rebuild config
+#flux rebuild config
 
 # Rebuild NixOS
 flux rebuild system
