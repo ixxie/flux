@@ -13,3 +13,10 @@ function writevar
     
 }
 
+
+function save
+{
+    file="$1"
+    vars="${@:2}"
+    declare -p $vars > $file
+}

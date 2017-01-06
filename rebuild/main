@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-# Rebuild Configuration
-#flux rebuild config
-
 # Rebuild NixOS
 flux rebuild system
 

@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-set -e
-
-function save
-{
-    file="$1"
-    vars="${@:2}"
-    declare -p $vars > $file
-}
