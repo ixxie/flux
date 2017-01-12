@@ -10,7 +10,7 @@ function maketemp
 
     com="sed -i"
 
-    for var in username fullname hostname timezone
+    for var in username hostname timezone
     do
         clnvar=${!var//\//\\\/}
         com="$com -e 's;\$$var;$clnvar;g'"
