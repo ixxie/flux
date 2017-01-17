@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -e
+
+nix-env -qaP \* --arg config '{allowUnfree = true;}' | grep "$@"
+
+#  allowBroken = true;
+
