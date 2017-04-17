@@ -2,7 +2,7 @@
 set -e
 
 # Copy configuration scripts to main system
-cp -R $FLUX_HOME/env/nixos/* /etc/nixos
+#cp -R $FLUX_HOME/env/nixos/* /etc/nixos
 
 # Rebuild NixOS
 nixos-rebuild switch

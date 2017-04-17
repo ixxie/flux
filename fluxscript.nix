@@ -4,22 +4,25 @@ let
 
     version = "0.0.1";
 
-
 in stdenv.mkDerivation 
+rec 
 {
 
     name = "flux-${version}";
 
     src = ./.;
 
-    phases = [ "installPhase" ];
+    
+
+    phases = [ "unpackPhase" "installPhase" ];
 
 
     installPhase =
         ''
-            mkdir -p $out/
-            cp -R ./bin $out/.
-            cp -R ./lib $out/.
+            set -x
+            mkdir -p $out
+            cp -R ./bin $out/bin
+            cp -R ./lib $out/lib
         '';
     
 }
