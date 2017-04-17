@@ -10,6 +10,12 @@ LIBDIR="$(dirname ${BINDIR})/lib"
 # Create an argument array
 ARGARRAY=("$@")
 
+# Exception when no subcommands are entered.
+
+if [[ "$#" == 0 ]]
+    then
+        echo "Enter subcommands."
+fi
 
 # Execute commands
 
