@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+
+name=$1
+url=$2
+branch=${3:-"master"}
+
+nix-prefetch-git --url "$url" --rev "refs/heads/$branch" > "$name".json

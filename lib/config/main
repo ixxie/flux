@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+set -e
+
+# For saving variables to file.
+function save
+{
+    file="$1"
+    vars="${@:2}"
+    declare -p $vars > $file
+}
+
+# Make sure the flux configuration directory exists.
+fluxdir="$HOME/.flux"
+
+# Make it if it doesn't:
+if ! [ -d "$fluxdir" ]
+    then
+        mkdir "$fluxdir"
+fi
+
+# Load existing configuration if it is there:
+if [ -e "$fluxdir/config" ]
+    then
+        . "$fluxdir/config"
+        echo "Configuration loaded from $fluxdir/config"
+else
+# Otherwise create configuration file and set default values:
+    if ! [ -d "$fluxdir" ]
+        then
+            mkdir $fluxdir
+    fi
+    touch $fluxdir/config
+    projdir="$HOME/Projects"
+    sysdir="$HOME/Config"
+fi
+
+# Set project directory:
+read -p "Set project directory: " -i "$projdir" -e projdir
+if ! [ -d "$projdir" ]
+    then
+        mkdir "$projdir"
+fi
+
+# Set system configuration directory:
+read -p "Set system configuration directory: " -i "$sysdir" -e sysdir
+if ! [ -d "$sysdir" ]
+    then
+        mkdir "$sysdir"
+fi
+
+# Save variables to the configuration file:
+save "$fluxdir/config" projdir sysdir

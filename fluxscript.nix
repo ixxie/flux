@@ -1,4 +1,4 @@
-{ stdenv }:
+{ stdenv, pkgs }:
 
 let
 
@@ -20,4 +20,9 @@ rec
             find $out/lib -exec chmod u+x {} \;
         '';
     
+    runtimeDependency = [ pkgs.bashInteractive ];
+
+    dontPatchShebangs = true;
+    
 }
+
