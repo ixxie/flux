@@ -7,9 +7,6 @@ nix-channel --update
 # Rebuild NixOS
 flux rebuild system
 
-# Rebuild scripts (i.e. make them executable)
-flux rebuild scripts
-
 # Garbage Collection
 flux clean
 
